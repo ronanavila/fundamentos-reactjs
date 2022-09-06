@@ -4,6 +4,36 @@ import { Sidebar } from "./components/Sidebar"
 import './global.css'
 import styles from './App.module.css'
 
+const posts = [
+  {
+    id:1,
+    author:{
+      avatarUrl: 'https://github.com/ronanavila.png',
+      name: 'Ronan Avila',
+      role: 'Developer'
+    },
+    content:[
+      {type: 'paragraph', content: 'Fala galeraa'},
+      {type: 'paragraph', content: 'Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare'},
+      {type: 'link', content:'jane.design/doctorcare'},
+    ],
+    publishedAt: new Date('2022-09-03 20:00:00')
+  },
+  {
+    id:2,
+    author:{
+      avatarUrl: 'https://github.com/ronanavila.png',
+      name: 'Avila Ronan',
+      role: 'Captain'
+    },
+    content:[
+      {type: 'paragraph', content: 'Fala galeraa'},
+      {type: 'paragraph', content: 'Acabei de subir mais um projeto no meu portifa. O nome do projeto é DontCare'},
+      {type: 'link', content:'jane.design/notcare'},
+    ],
+    publishedAt: new Date('2022-09-06 07:00:00')
+  },
+];
 
 export function App() {
   return (
@@ -12,14 +42,13 @@ export function App() {
       <div className={styles.wrapper}>
         <Sidebar/>         
         <main>
-          <Post 
-            author="Pedro"
-            content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet ullam nesciunt, dolores inventore sed tenetur ab dicta fugit placeat laborum quisquam obcaecati! Deserunt, magnam eaque similique iusto a aperiam."
-          />
-          <Post
-            author="Joao"
-            content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet ullam nesciunt, dolores inventore sed tenetur ab dicta fugit placeat laborum quisquam obcaecati! Deserunt, magnam eaque similique iusto a aperiam."
-          />
+          {posts.map(post =>{
+            return (<Post
+                author={post.author}
+                content={post.content}
+                publishedAt={post.publishedAt}
+              />)
+          })}
         </main>
       </div>
     </div>

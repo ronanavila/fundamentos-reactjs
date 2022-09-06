@@ -1,25 +1,37 @@
+import {add, format, formatDistanceToNow} from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import { Avatar } from './Avatar';
 import { Comment } from './Comment';
 import styles from './Post.module.css';
 
-export function Post(){
+export function Post({author, publishedAt, content}){
+
+    const publishedDateFormated = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {locale: ptBR})
+    const publishedDateRelativeFromNow = formatDistanceToNow(publishedAt, {locale: ptBR, addSuffix: true})
+
     return(
         <article className={styles.post}>
             <header>
                 <div className={styles.author}>
-                    <Avatar src="https://github.com/ronanavila.png"/>
+                    <Avatar src={author.avatarUrl}/>
                     <div className={styles.authorInfo}>
-                        <strong>Paulo José</strong>
-                        <span>Web Developer</span>
+                        <strong>{author.name}</strong>
+                        <span>{author.role}</span>
                     </div>
                 </div>
-                <time title="05 de setembro de 2022 às 01:01h" dateTime="2022-09-05 01:01:00">Publicado há 1 hora</time>
+                <time title={publishedDateFormated} dateTime={publishedAt.toISOString()}>
+                {publishedDateRelativeFromNow}
+                </time>
             </header>
 
             <div className={styles.content}>
-                <p>Fala galeraa 👋</p>
-                <p>Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀</p>
-                <p><a href="">jane.design/doctorcare</a></p>
+                {content.map(line =>{
+                    if(line.type === 'paragraph'){
+                        return <p>{line.content}</p>;
+                    }else if(line.type === 'link'){
+                        return <p><a href="#">{line.content}</a></p>;
+                    }
+                })}
                 <p><a href="">#tudonovo</a>{' '}
                 <a href="">#maisum</a>{' '}
                 <a href="">#legal</a>
